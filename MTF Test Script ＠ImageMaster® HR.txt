@@ -1,0 +1,48 @@
+#this is a script for ImageMaster® HR, 
+#some parameters are not used in this example, plz pay attention according to the needs
+
+PramaBegin Main
+  Dim iMtfMax, Integer, 300, " the max measurement of lp/mm"
+  Dim iMtfPitch,Integer, 10, "MTF pitch for measurement"
+  Dim iMeasFreqA, Integer, 15, "MTF measurement frequence lp/mm"
+  Dim iFocusStepA, Integer, 10, "Number of Focus steps"
+  Dim iFocusStepB, Integer, 40, "Number of Focus steps"
+  Dim iDistortionSteps, Integer, 2, "Distortion steps"
+  Dim dFocusRangeA, Double, 0.20, "ThroughFocusRange mm"
+  Dim dFocusRangeB, Double, 0.10, "ThroughFocusRange mm"
+  Dim dFocusRangeC, Double, 0.05, "ThroughFocusRange mm"
+  Dim dMagnification, Double, XXX, " Magnification of Optical system to be measured"
+  Dim dPuipDiameter, Double, YYY," Entrance pupil diameter of Optical system to be measured"
+  Dim dFocusStart, Double, -0.15," A start position of Throughfocus"
+  Dim dFocusStop, Double, 0.15," A stop position of Throughfocus"
+  Dim dMtfThre, Double, 0.2, "  With which to decide the Focus position scope"
+  Dim dReferenceShift, Double, 0.1, "With which to calculate EFL magnification"
+  Dim dDistortionRange, Double, 0.1, "Distortion Range"
+  Dim sSaveNameEFL, String, elf, "Output filename of EFL measurement"
+  Dim sSavenameMTF, String, MTFFieldFocus,"Output file name of MTF measurement @ MTFFiledFocus option"
+  Dim sPostionFile, String, ZZZZZZ.fld, "The image height postion vs rectile opstion tabel file for the sample in real"
+  Dim sCompanym String, WWWW, "Sample manufactured by WWW"
+  Dim sOperator, String, VVV, "The operator info."
+PramEnd
+
+Proc Main
+Selectsystem "FF"  #note: FF means Object: Finite Image:Finiteand there are other 3 for options: IF/FI/II  
+
+SetParam "MainWnd|Company", sCompany
+SetParam "MainWnd|Operator", sOperator
+SetParam "MainWnd|SampleValue", dMagnification
+SetParam "MainWnd|FNumber", dPupilDiameter #note that this sample is for FF system, dPuiplDiameter is used
+
+SelectRange 2 #= Mag 0.001~0.25 MTF cross. choose the range according to the sample @ recticle mangnification and type cross or slit
+SelectFilter 6 #this is for test wavelength, should be choosen by Insrument settings
+MoveAbs "ObjectHeight", 0.000, 50 # move to the 0 at a 50% speed
+MoveAbs "ObjectDistance", UUU,50 # move the rectile to the absolute postion UUU at a 50% speed, where UUU is the decided by target setting
+MoveAbs "ImageHeight",0.000,50 # move the image/camera to 0.000 at a 50% speed
+Camera AutoShutterOnce # adjust image brightness to defined se brightness
+ThroughFoucs 0,0, iMtfMax, iMtfPitch, iMeasFreqA, iFoucsStepA, dFocusRangeB,"Both",1
+
+
+to be continued
+
+
+  
